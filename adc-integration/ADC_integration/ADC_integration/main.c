@@ -23,7 +23,7 @@ int main(void)
 	
 	USART1_init(9600); 
 	
-	ADC0.WINHT = upper_threshold;
+	ADC0.WINHT = 15;
 	ADC0.INTCTRL |= (1 << 1);  // Window Comparator Interrupt Enable
 	ADC0.CTRLE = 0x2;          //RESULT > WINHT
 	ADC_selected_channel = channel_1;
@@ -32,7 +32,7 @@ int main(void)
     while (1) 
     {
 		ADC_value = ADC0_read(ADC_selected_channel);
-		USART1_sendInt(ADC_value);
+		//USART1_sendInt(ADC_value);
 	}
 }
 
@@ -41,7 +41,7 @@ ISR(ADC0_WCMP_vect)
 	currentmillis = millis;
 	if ((currentmillis - previousmillis) > 50)
 	{
-		tempi ++;
+		tempi ++ ;
 		USART1_sendInt(tempi);
 	}
 	previousmillis = millis;
